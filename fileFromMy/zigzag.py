@@ -1,26 +1,26 @@
-#makes a program that moves a few astericks back and forth until `cntrl-c` is keyed
-import time, sys
-indent = 0 # How many spaces to indent.
-indentIncreasing = True # Whether the indentation is increasing or not.
+# Improved code for a program that moves asterisks back and forth until `Ctrl-C` is pressed
+import time
+import sys
 
-try:
-    while True: # The main program loop.
-        print(' ' * indent, end='')
-        print('********')
-        time.sleep(0.1) # Pause for 1/10 of a second.
+def animate_asterisks(max_indent=20, sleep_time=0.1):
+    indent = 0
+    increasing_indent = True
 
-        if indentIncreasing:
-            # Increase the number of spaces:
-            indent = indent + 1
-            if indent == 20:
-                # Change direction:
-                indentIncreasing = False
+    try:
+        while True:
+            print(' ' * indent + '********')
+            time.sleep(sleep_time)
 
-        else:
-            # Decrease the number of spaces:
-            indent = indent - 1
-            if indent == 0:
-                # Change direction:
-                indentIncreasing = True
-except KeyboardInterrupt:
-    sys.exit()
+            if increasing_indent:
+                indent += 1
+                if indent == max_indent:
+                    increasing_indent = False
+            else:
+                indent -= 1
+                if indent == 0:
+                    increasing_indent = True
+    except KeyboardInterrupt:
+        sys.exit()
+
+if __name__ == "__main__":
+    animate_asterisks()
