@@ -1,63 +1,40 @@
-#Rock, paper, scissors game from Automate the boring stuff
-
 import random, sys
+
+def display_move(move):
+    moves_dict = {'r': 'ROCK', 'p': 'PAPER', 's': 'SCISSORS'}
+    return moves_dict.get(move)
+
 print('ROCK, PAPER, SCISSORS')
 
-#These variables tally outcomes
+# These variables tally outcomes
 wins = 0
 losses = 0
 ties = 0
 
-while True: #The main game loop
-    print('%s Wins, %s Losses, %s Ties'%(wins, losses, ties))
-    while True: #the player input loop
-        print('Enter your move: (r)ock (p)aper (s)cissors or (q)uit')
-        playerMove=input()
-        if playerMove=='q':
-            sys.exit() #quit the program
-        if playerMove=='r' or playerMove=='p' or playerMove=='s':
-            break #break out of the player input loop
-        print('Type one of r, p, s, or q.')
+while True:  # The main game loop
+    print(f'{wins} Wins, {losses} Losses, {ties} Ties')
 
-    #Display what the player chose:
-    if playerMove=='r':
-        print('ROCK versus...')
-    elif playerMove=='p':
-        print('PAPER versus...')
-    elif playerMove=='s':
-        print('SCISSORS versus...')
+    # The player input loop
+    player_move = ''
+    while player_move not in ['r', 'p', 's', 'q']:
+        player_move = input("Enter your move: (r)ock (p)aper (s)cissors or (q)uit: ").lower()
+        if player_move == 'q':
+            sys.exit()  # quit the program
 
-    #Display what the computer chose
-    randomNumber=random.randint(1,3)
-    if randomNumber==1:
-        computerMove='r'
-        print('ROCK')
-    elif randomNumber==2:
-        computerMove='p'
-        print('PAPER')
-    elif randomNumber==3:
-        computerMove='s'
-        print('SCISSORS')
+    # Display what the player chose:
+    print(f'{display_move(player_move)} versus...')
 
-    #Display and record the winn/loss/tie:
-    if playerMove==computerMove:
+    # Display what the computer chose
+    computer_move = random.choice(['r', 'p', 's'])
+    print(display_move(computer_move))
+
+    # Display and record the win/loss/tie:
+    if player_move == computer_move:
         print('It is a tie!')
-        ties=ties + 1
-    elif playerMove=='r' and computerMove=='s':
+        ties += 1
+    elif (player_move, computer_move) in [('r', 's'), ('p', 'r'), ('s', 'p')]:
         print('You win!')
-        wins=wins + 1
-    elif playerMove=='p' and computerMove=='r':
-        print('You win!')
-        wins=wins + 1
-    elif playerMove=='s' and computerMove=='p':
-        print('You win!')
-        wins=wins + 1
-    elif playerMove=='r' and computerMove=='p':
+        wins += 1
+    else:
         print('You lose!')
-        losses=losses + 1
-    elif playerMove=='p' and computerMove == 's':
-        print('You lose!')
-        losses=losses + 1
-    elif playerMove == 's' and computerMove == 'r':
-        print('You lose!')
-        losses=losses + 1
+        losses += 1
