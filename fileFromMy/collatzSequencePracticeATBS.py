@@ -1,21 +1,27 @@
-#Big thanks to stackoverflow on this one for helping me understand recursion, link:
-#Write a function named collatz() that has one parameter named number.
-#If number is even, then collatz() should print number // 2 and return this value.
-#If number is odd, then collatz() should print and return 3 * number + 1.
-#Has input validation.
+#Big thanks to stackoverflow on this one for helping me understand recursion, and to GPT4 for helping optimize the code
+#Performs a Collatz sequence operation on the input number.
+#Args: number (int): The number to perform the Collatz operation on.
+#Returns: int: The result of the Collatz operation.
 
-def collatz(number): #main colltaz function
+def collatz(number):
     if number % 2 == 0:
-        print(number // 2)
-        return number // 2
+        result = number // 2
+    else:
+        result = 3 * number + 1
 
-    elif number % 2 == 1:
-        number = 3 * number + 1
-        print(number)
-        return number
-try:
-    n = input('Enter number: ') # takes user input
-    while n !=1: # performs while loop until 'n' becomes 1
-        n = collatz(int(n)) # passes 'n' to collatz() function until it arrives at '1'
-except ValueError:
-    print('Value Error. Please enter integer.')
+    print(result)
+    return result
+
+def main():
+    try:
+        n = int(input('Enter a positive integer: '))
+        if n <= 0:
+            raise ValueError('The input must be a positive integer.')
+
+        while n != 1:
+            n = collatz(n)
+    except ValueError as e:
+        print(f'Error: {e}')
+
+if __name__ == '__main__':
+    main()
